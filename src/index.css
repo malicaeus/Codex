@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background layers */
+    --background: 40 20% 98%;
+    --background-secondary: 40 15% 95%;
+    --background-tertiary: 40 10% 92%;
+    --foreground: 30 10% 15%;
+
+    /* Cards & Surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 30 10% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 10% 15%;
+
+    /* Primary - Warm Amber */
+    --primary: 35 90% 45%;
+    --primary-foreground: 40 20% 98%;
+    --primary-muted: 35 60% 85%;
+
+    /* Secondary */
+    --secondary: 40 10% 92%;
+    --secondary-foreground: 30 10% 25%;
+
+    /* Muted */
+    --muted: 40 10% 90%;
+    --muted-foreground: 30 8% 45%;
+
+    /* Accent - Soft amber glow */
+    --accent: 35 80% 50%;
+    --accent-foreground: 40 20% 98%;
+
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 35 90% 45%;
+
+    /* Wiki-specific */
+    --wiki-link: 35 85% 42%;
+    --wiki-link-hover: 35 90% 35%;
+    --wiki-heading: 30 10% 20%;
+    --wiki-code-bg: 40 10% 94%;
+    --wiki-blockquote: 40 15% 92%;
+    --wiki-infobox: 35 40% 95%;
+    --wiki-infobox-header: 35 70% 40%;
+
+    /* Sidebar */
+    --sidebar-background: 40 15% 96%;
+    --sidebar-foreground: 30 10% 25%;
+    --sidebar-primary: 35 90% 45%;
+    --sidebar-primary-foreground: 40 20% 98%;
+    --sidebar-accent: 35 50% 92%;
+    --sidebar-accent-foreground: 30 10% 20%;
+    --sidebar-border: 40 15% 88%;
+    --sidebar-ring: 35 90% 45%;
+
+    --radius: 0.5rem;
+
+    /* Typography */
+    --font-serif: 'Crimson Pro', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+  }
+
+  .dark {
+    /* Background layers - Deep slate */
+    --background: 220 20% 10%;
+    --background-secondary: 220 18% 13%;
+    --background-tertiary: 220 16% 16%;
+    --foreground: 40 15% 92%;
+
+    /* Cards & Surfaces */
+    --card: 220 18% 12%;
+    --card-foreground: 40 15% 92%;
+    --popover: 220 18% 14%;
+    --popover-foreground: 40 15% 92%;
+
+    /* Primary - Warm Amber */
+    --primary: 35 85% 55%;
+    --primary-foreground: 220 20% 10%;
+    --primary-muted: 35 40% 25%;
+
+    /* Secondary */
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 40 15% 85%;
+
+    /* Muted */
+    --muted: 220 15% 20%;
+    --muted-foreground: 40 10% 55%;
+
+    /* Accent */
+    --accent: 35 80% 55%;
+    --accent-foreground: 220 20% 10%;
+
+    /* Destructive */
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 35 85% 55%;
+
+    /* Wiki-specific */
+    --wiki-link: 35 80% 60%;
+    --wiki-link-hover: 35 85% 70%;
+    --wiki-heading: 40 15% 95%;
+    --wiki-code-bg: 220 15% 15%;
+    --wiki-blockquote: 220 15% 14%;
+    --wiki-infobox: 220 15% 14%;
+    --wiki-infobox-header: 35 70% 45%;
+
+    /* Sidebar */
+    --sidebar-background: 220 18% 11%;
+    --sidebar-foreground: 40 15% 85%;
+    --sidebar-primary: 35 85% 55%;
+    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-accent: 220 15% 16%;
+    --sidebar-accent-foreground: 40 15% 92%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 35 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  /* Wiki article prose styles */
+  .wiki-prose {
+    @apply text-foreground leading-relaxed;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+  }
+
+  .wiki-prose h1,
+  .wiki-prose h2,
+  .wiki-prose h3,
+  .wiki-prose h4,
+  .wiki-prose h5,
+  .wiki-prose h6 {
+    font-family: var(--font-sans);
+    @apply font-semibold text-wiki-heading scroll-mt-20;
+  }
+
+  .wiki-prose h1 {
+    @apply text-3xl md:text-4xl mb-6 mt-8 pb-3 border-b border-border;
+  }
+
+  .wiki-prose h2 {
+    @apply text-2xl md:text-3xl mb-4 mt-8 pb-2 border-b border-border/50;
+  }
+
+  .wiki-prose h3 {
+    @apply text-xl md:text-2xl mb-3 mt-6;
+  }
+
+  .wiki-prose h4 {
+    @apply text-lg md:text-xl mb-2 mt-5;
+  }
+
+  .wiki-prose p {
+    @apply mb-4;
+  }
+
+  .wiki-prose a {
+    @apply text-wiki-link hover:text-wiki-link-hover underline underline-offset-2 transition-colors;
+  }
+
+  .wiki-prose ul,
+  .wiki-prose ol {
+    @apply mb-4 pl-6;
+  }
+
+  .wiki-prose ul {
+    @apply list-disc;
+  }
+
+  .wiki-prose ol {
+    @apply list-decimal;
+  }
+
+  .wiki-prose li {
+    @apply mb-1;
+  }
+
+  .wiki-prose blockquote {
+    @apply bg-wiki-blockquote border-l-4 border-primary pl-4 py-2 my-4 italic;
+  }
+
+  .wiki-prose code {
+    @apply bg-wiki-code-bg px-1.5 py-0.5 rounded text-sm font-mono;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  }
+
+  .wiki-prose pre {
+    @apply bg-wiki-code-bg p-4 rounded-lg overflow-x-auto my-4;
+  }
+
+  .wiki-prose pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .wiki-prose img {
+    @apply rounded-lg my-6 max-w-full h-auto;
+  }
+
+  .wiki-prose table {
+    @apply w-full border-collapse my-6;
+  }
+
+  .wiki-prose th,
+  .wiki-prose td {
+    @apply border border-border px-3 py-2 text-left;
+  }
+
+  .wiki-prose th {
+    @apply bg-secondary font-semibold;
+    font-family: var(--font-sans);
+  }
+
+  .wiki-prose hr {
+    @apply border-border my-8;
+  }
+
+  /* Wiki link styles */
+  .wiki-link {
+    @apply text-wiki-link hover:text-wiki-link-hover underline underline-offset-2 transition-colors cursor-pointer;
+  }
+
+  .wiki-link-missing {
+    @apply text-destructive/70 hover:text-destructive;
+  }
+
+  /* Infobox styles */
+  .wiki-infobox {
+    @apply bg-wiki-infobox border border-border rounded-lg overflow-hidden float-right ml-6 mb-4 w-72;
+  }
+
+  .wiki-infobox-header {
+    @apply bg-wiki-infobox-header text-primary-foreground px-4 py-3 font-semibold text-center;
+    font-family: var(--font-sans);
+  }
+
+  .wiki-infobox-image {
+    @apply w-full aspect-video object-cover;
+  }
+
+  .wiki-infobox-content {
+    @apply p-0;
+  }
+
+  .wiki-infobox-row {
+    @apply border-b border-border last:border-b-0;
+  }
+
+  .wiki-infobox-label {
+    @apply px-3 py-2 bg-secondary/50 font-medium text-sm;
+    font-family: var(--font-sans);
+  }
+
+  .wiki-infobox-value {
+    @apply px-3 py-2 text-sm;
+  }
+
+  /* TOC styles */
+  .wiki-toc {
+    @apply bg-card border border-border rounded-lg p-4 my-6;
+  }
+
+  .wiki-toc-title {
+    @apply font-semibold mb-3 text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  .wiki-toc-list {
+    @apply space-y-1;
+  }
+
+  .wiki-toc-item {
+    @apply text-muted-foreground hover:text-wiki-link transition-colors text-sm;
+  }
+
+  .wiki-toc-item-h2 {
+    @apply pl-0;
+  }
+
+  .wiki-toc-item-h3 {
+    @apply pl-4;
+  }
+
+  .wiki-toc-item-h4 {
+    @apply pl-8;
+  }
+}
+
+@layer utilities {
+  .text-wiki-heading {
+    color: hsl(var(--wiki-heading));
+  }
+
+  .text-wiki-link {
+    color: hsl(var(--wiki-link));
+  }
+
+  .hover\:text-wiki-link-hover:hover {
+    color: hsl(var(--wiki-link-hover));
+  }
+
+  .bg-wiki-code-bg {
+    background-color: hsl(var(--wiki-code-bg));
+  }
+
+  .bg-wiki-blockquote {
+    background-color: hsl(var(--wiki-blockquote));
+  }
+
+  .bg-wiki-infobox {
+    background-color: hsl(var(--wiki-infobox));
+  }
+
+  .bg-wiki-infobox-header {
+    background-color: hsl(var(--wiki-infobox-header));
+  }
+
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Stagger animation delays */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+}
