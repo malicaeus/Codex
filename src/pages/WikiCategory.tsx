@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { getCategoryBySlug } from '@/lib/wiki-content';
+import { getCategoryBySlug } from '@/lib/content-loader';
 import { WikiArticleCard } from '@/components/wiki/WikiArticleCard';
 import { WikiBreadcrumbs } from '@/components/wiki/WikiBreadcrumbs';
 import { FolderOpen, AlertCircle } from 'lucide-react';

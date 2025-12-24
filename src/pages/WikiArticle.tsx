@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getArticleBySlug, extractTOC, getBreadcrumbs } from '@/lib/wiki-content';
+import { getArticleBySlug, extractTOC, getBreadcrumbs } from '@/lib/content-loader';
 import { WikiArticle as WikiArticleType, TOCItem } from '@/types/wiki';
 import { WikiBreadcrumbs } from '@/components/wiki/WikiBreadcrumbs';
 import { WikiContent } from '@/components/wiki/WikiContent';
@@ -10,7 +10,7 @@ import { Calendar, Tag, AlertCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
 export default function WikiArticlePage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { "*": slug } = useParams();
   const [article, setArticle] = useState<WikiArticleType | null>(null);
   const [toc, setToc] = useState<TOCItem[]>([]);
   const [activeHeading, setActiveHeading] = useState<string>('');

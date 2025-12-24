@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Book, Search, ArrowRight, Sparkles, FileText, FolderTree, Moon, Sun } from 'lucide-react';
-import { getFeaturedArticles, getRecentArticles, getAllCategories } from '@/lib/wiki-content';
+import { getFeaturedArticles, getRecentArticles, getAllCategories } from '@/lib/content-loader';
 import { WikiSearch } from '@/components/wiki/WikiSearch';
 import { WikiArticleCard } from '@/components/wiki/WikiArticleCard';
 import { useTheme } from '@/hooks/use-theme';

@@ -24,7 +24,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/wiki" element={<WikiLayout />}>
-                <Route path="article/:slug" element={<WikiArticle />} />
+                <Route path="article/*" element={<WikiArticle />} />
                 <Route path="category/:slug" element={<WikiCategory />} />
               </Route>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

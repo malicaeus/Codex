@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, FileText, Tag } from 'lucide-react';
-import { searchArticles } from '@/lib/wiki-content';
+import { searchArticles } from '@/lib/content-loader';
 import { SearchResult } from '@/types/wiki';
 import { cn } from '@/lib/utils';
 

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { ChevronRight, ChevronDown, FileText, FolderOpen } from 'lucide-react';
-import { getNavigation } from '@/lib/wiki-content';
+import { getNavigation } from '@/lib/content-loader';
 import { WikiNavItem } from '@/types/wiki';
 import { cn } from '@/lib/utils';
 

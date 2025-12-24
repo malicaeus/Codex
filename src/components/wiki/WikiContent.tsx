@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
-import { parseWikiLinks } from '@/lib/wiki-content';
+import { parseWikiLinks } from '@/lib/content-loader';
 import { useNavigate } from 'react-router-dom';
 
 interface WikiContentProps {
