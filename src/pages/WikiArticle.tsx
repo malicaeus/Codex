@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getArticleBySlug, extractTOC, getBreadcrumbs } from '@/lib/content-loader';
+import { getArticleBySlug, extractTOC, getBreadcrumbs, getBacklinks } from '@/lib/content-loader';
 import { WikiArticle as WikiArticleType, TOCItem } from '@/types/wiki';
 import { WikiBreadcrumbs } from '@/components/wiki/WikiBreadcrumbs';
 import { WikiContent } from '@/components/wiki/WikiContent';
 import { WikiInfobox } from '@/components/wiki/WikiInfobox';
 import { WikiTOCSidebar } from '@/components/wiki/WikiTOC';
+import { WikiBacklinks } from '@/components/wiki/WikiBacklinks';
 import { Calendar, Tag, AlertCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
@@ -13,6 +14,7 @@ export default function WikiArticlePage() {
   const { "*": slug } = useParams();
   const [article, setArticle] = useState<WikiArticleType | null>(null);
   const [toc, setToc] = useState<TOCItem[]>([]);
+  const [backlinks, setBacklinks] = useState<WikiArticleType[]>([]);
   const [activeHeading, setActiveHeading] = useState<string>('');
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function WikiArticlePage() {
       setArticle(foundArticle || null);
       if (foundArticle) {
         setToc(extractTOC(foundArticle.content));
+        setBacklinks(getBacklinks(slug));
       }
     }
   }, [slug]);
@@ -124,6 +127,9 @@ export default function WikiArticlePage() {
 
           {/* Article content */}
           <WikiContent content={article.content} />
+
+          {/* Backlinks */}
+          <WikiBacklinks backlinks={backlinks} />
 
           {/* Clear float */}
           <div className="clear-both" />

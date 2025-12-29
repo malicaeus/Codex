@@ -284,3 +284,42 @@ export function parseWikiLinks(content: string): string {
     return `[${text}](/wiki/article/${slug})`;
   });
 }
+
+// Find all articles that link to a given article
+export function getBacklinks(targetSlug: string): WikiArticle[] {
+  const allArticles = getAllArticles();
+  const backlinks: WikiArticle[] = [];
+  
+  // Normalize target slug for comparison
+  const normalizedTarget = targetSlug.toLowerCase().replace(/\s+/g, '-');
+  
+  for (const article of allArticles) {
+    // Skip self
+    if (article.slug === targetSlug) continue;
+    
+    // Check for wiki-style links [[target]] or [[target|display]]
+    const wikiLinkRegex = /\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g;
+    let match;
+    
+    while ((match = wikiLinkRegex.exec(article.content)) !== null) {
+      const linkedSlug = match[1].trim().toLowerCase().replace(/\s+/g, '-');
+      if (linkedSlug === normalizedTarget) {
+        backlinks.push(article);
+        break;
+      }
+    }
+    
+    // Also check for markdown links to the article
+    if (!backlinks.includes(article)) {
+      const mdLinkRegex = /\[([^\]]+)\]\(\/wiki\/article\/([^)]+)\)/g;
+      while ((match = mdLinkRegex.exec(article.content)) !== null) {
+        if (match[2] === normalizedTarget) {
+          backlinks.push(article);
+          break;
+        }
+      }
+    }
+  }
+  
+  return backlinks;
+}
