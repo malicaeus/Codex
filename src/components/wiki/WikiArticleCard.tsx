@@ -13,21 +13,23 @@ export function WikiArticleCard({ article, featured = false }: WikiArticleCardPr
     <Link
       to={`/wiki/article/${article.slug}`}
       className={cn(
-        'block bg-card border border-border rounded-lg p-5 transition-all duration-200',
-        'hover:border-primary/30 hover:shadow-md hover:shadow-primary/5',
-        'group animate-fade-in'
+        'block bg-card border border-border rounded-lg p-5 transition-all duration-300',
+        'hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1',
+        'group'
       )}
     >
       <div className="flex items-start gap-3">
         <div className={cn(
-          'w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-colors',
-          featured ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground group-hover:text-primary'
+          'w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300',
+          featured 
+            ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110' 
+            : 'bg-secondary text-muted-foreground group-hover:text-primary group-hover:scale-110'
         )}>
           <FileText className="h-5 w-5" />
         </div>
         
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-1">
             {article.title}
           </h3>
           
