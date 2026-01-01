@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getArticleBySlug, extractTOC, getBreadcrumbs, getBacklinks } from '@/lib/content-loader';
+import { getArticleBySlug, extractTOC, getBreadcrumbs, getBacklinks, calculateReadingTime } from '@/lib/content-loader';
 import { WikiArticle as WikiArticleType, TOCItem } from '@/types/wiki';
 import { WikiBreadcrumbs } from '@/components/wiki/WikiBreadcrumbs';
 import { WikiContent } from '@/components/wiki/WikiContent';
 import { WikiInfobox } from '@/components/wiki/WikiInfobox';
 import { WikiTOCSidebar } from '@/components/wiki/WikiTOC';
 import { WikiBacklinks } from '@/components/wiki/WikiBacklinks';
-import { Calendar, Tag, AlertCircle } from 'lucide-react';
+import { Calendar, Tag, AlertCircle, Clock } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
@@ -95,6 +95,10 @@ export default function WikiArticlePage() {
             )}
 
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground animate-fade-in stagger-2">
+              <span className="flex items-center gap-1.5">
+                <Clock className="h-4 w-4" />
+                {calculateReadingTime(article.content)} min read
+              </span>
               {article.frontmatter.updated && (
                 <span className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" />

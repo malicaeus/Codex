@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { WikiArticle } from '@/types/wiki';
-import { FileText, Calendar, Tag } from 'lucide-react';
+import { FileText, Calendar, Tag, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { calculateReadingTime } from '@/lib/content-loader';
 
 interface WikiArticleCardProps {
   article: WikiArticle;
@@ -40,6 +41,10 @@ export function WikiArticleCard({ article, featured = false }: WikiArticleCardPr
           )}
           
           <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              {calculateReadingTime(article.content)} min
+            </span>
             {article.frontmatter.updated && (
               <span className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />

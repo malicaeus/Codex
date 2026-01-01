@@ -323,3 +323,20 @@ export function getBacklinks(targetSlug: string): WikiArticle[] {
   
   return backlinks;
 }
+
+// Calculate estimated reading time in minutes
+export function calculateReadingTime(content: string): number {
+  // Clean markdown content
+  const cleanText = content
+    .replace(/```[\s\S]*?```/g, '') // Code blocks
+    .replace(/`[^`]+`/g, '')         // Inline code
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '') // Images
+    .replace(/\[[^\]]*\]\([^)]*\)/g, '$1') // Links (keep text)
+    .replace(/[#*_~>`-]/g, '')       // Markdown syntax
+    .trim();
+  
+  const wordCount = cleanText.split(/\s+/).filter(Boolean).length;
+  const wordsPerMinute = 200;
+  
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+}
