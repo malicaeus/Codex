@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
-import { Search, Menu, X, Sun, Moon, Book } from 'lucide-react';
-import { useState } from 'react';
+import { Search, Menu, X, Sun, Moon, Book, Keyboard } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '@/hooks/use-theme';
 import { WikiSearch } from './WikiSearch';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { ReadingProgressBar } from './ReadingProgressBar';
+import { KeyboardShortcutsHelp } from './KeyboardShortcutsHelp';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface WikiHeaderProps {
   onMenuToggle?: () => void;
@@ -14,9 +23,37 @@ interface WikiHeaderProps {
 export function WikiHeader({ onMenuToggle, isMobileMenuOpen }: WikiHeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isShortcutsHelpOpen, setIsShortcutsHelpOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    onOpenSearch: () => {
+      setIsSearchOpen(true);
+      // Focus search input after opening
+      setTimeout(() => {
+        const input = document.querySelector('[data-search-input]') as HTMLInputElement;
+        input?.focus();
+      }, 100);
+    },
+    onOpenHelp: () => setIsShortcutsHelpOpen(true),
+  });
+
+  // Close search on Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (isSearchOpen) setIsSearchOpen(false);
+        if (isShortcutsHelpOpen) setIsShortcutsHelpOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isSearchOpen, isShortcutsHelpOpen]);
   return (
     <>
+      <ReadingProgressBar />
+      
       <header className="sticky top-0 z-50 glass-strong border-b border-border h-16">
         <div className="flex items-center justify-between h-full px-4 md:px-6">
           {/* Left section */}
@@ -52,6 +89,25 @@ export function WikiHeader({ onMenuToggle, isMobileMenuOpen }: WikiHeaderProps) 
               <Search className="h-5 w-5" />
             </button>
 
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsShortcutsHelpOpen(true)}
+                    className="h-9 w-9 transition-all duration-200 hover:scale-105 hidden md:flex"
+                    aria-label="Keyboard shortcuts"
+                  >
+                    <Keyboard className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Raccourcis clavier <kbd className="ml-1 text-xs bg-muted px-1.5 py-0.5 rounded">Ctrl+/</kbd></p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <Button
               variant="ghost"
               size="icon"
@@ -86,6 +142,11 @@ export function WikiHeader({ onMenuToggle, isMobileMenuOpen }: WikiHeaderProps) 
           </div>
         </div>
       )}
+
+      <KeyboardShortcutsHelp 
+        open={isShortcutsHelpOpen} 
+        onOpenChange={setIsShortcutsHelpOpen} 
+      />
     </>
   );
 }
