@@ -23,10 +23,10 @@ export const KEYBOARD_SHORTCUTS: Omit<KeyboardShortcut, 'action'>[] = [
   { key: 'K', ctrlOrCmd: true, description: 'Ouvrir la recherche', category: 'search' },
   { key: '/', ctrlOrCmd: true, description: 'Afficher les raccourcis', category: 'general' },
   { key: 'D', ctrlOrCmd: true, description: 'Basculer le thème', category: 'display' },
-  { key: 'Home', description: 'Aller en haut', category: 'navigation' },
-  { key: 'End', description: 'Aller en bas', category: 'navigation' },
-  { key: '←', description: 'Section précédente', category: 'navigation' },
-  { key: '→', description: 'Section suivante', category: 'navigation' },
+  { key: 'T', description: 'Aller en haut de page', category: 'navigation' },
+  { key: 'B', description: 'Aller en bas de page', category: 'navigation' },
+  { key: '←', description: 'Section précédente (articles)', category: 'navigation' },
+  { key: '→', description: 'Section suivante (articles)', category: 'navigation' },
   { key: 'Escape', description: 'Fermer', category: 'general' },
 ];
 
@@ -72,15 +72,15 @@ export function useKeyboardShortcuts({
       // Skip navigation shortcuts if input is focused
       if (isInputFocused) return;
 
-      // Home: Scroll to top
-      if (event.key === 'Home' && !isCtrlOrCmd) {
+      // T: Scroll to top (more accessible than Home key)
+      if (event.key.toLowerCase() === 't' && !isCtrlOrCmd) {
         event.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
-      // End: Scroll to bottom
-      if (event.key === 'End' && !isCtrlOrCmd) {
+      // B: Scroll to bottom (more accessible than End key)
+      if (event.key.toLowerCase() === 'b' && !isCtrlOrCmd) {
         event.preventDefault();
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         return;

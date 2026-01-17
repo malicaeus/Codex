@@ -29,12 +29,16 @@ export function WikiHeader({ onMenuToggle, isMobileMenuOpen }: WikiHeaderProps) 
   // Keyboard shortcuts
   useKeyboardShortcuts({
     onOpenSearch: () => {
+      // On mobile, open overlay
       setIsSearchOpen(true);
-      // Focus search input after opening
+      // Focus search input (works on desktop and mobile)
       setTimeout(() => {
         const input = document.querySelector('[data-search-input]') as HTMLInputElement;
-        input?.focus();
-      }, 100);
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      }, 50);
     },
     onOpenHelp: () => setIsShortcutsHelpOpen(true),
   });

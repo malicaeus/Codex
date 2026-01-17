@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { getArticleBySlug, extractTOC, getBreadcrumbs, getBacklinks, calculateReadingTime } from '@/lib/content-loader';
 import { WikiArticle as WikiArticleType, TOCItem } from '@/types/wiki';
 import { WikiBreadcrumbs } from '@/components/wiki/WikiBreadcrumbs';
@@ -10,7 +10,7 @@ import { WikiBacklinks } from '@/components/wiki/WikiBacklinks';
 import { Calendar, Tag, AlertCircle, Clock } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 export default function WikiArticlePage() {
   const { "*": slug } = useParams();
   const [article, setArticle] = useState<WikiArticleType | null>(null);
@@ -51,6 +51,16 @@ export default function WikiArticlePage() {
 
     return () => observer.disconnect();
   }, [toc]);
+
+  // Get heading IDs for keyboard navigation
+  const headingIds = useMemo(() => toc.map(item => item.id), [toc]);
+
+  // Enable keyboard navigation between headings
+  useKeyboardShortcuts({
+    headings: headingIds,
+    activeHeading,
+    onNavigateHeading: setActiveHeading,
+  });
 
   if (!article) {
     return (

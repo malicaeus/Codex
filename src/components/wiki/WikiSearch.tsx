@@ -64,6 +64,7 @@ export function WikiSearch({ onResultClick }: WikiSearchProps) {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <input
           ref={inputRef}
+          data-search-input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
